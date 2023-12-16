@@ -1,0 +1,55 @@
+org: davidm123
+app: planyourdreamgetaway-http-api
+service: planyourdreamgetaway-http-api
+frameworkVersion: "3"
+useDotenv: true
+
+provider:
+  stage: dev
+  name: aws
+  runtime: nodejs18.x
+  region: eu-west-2
+
+functions:
+  placesPhotos:
+    handler: placesPhotos.handler
+    events:
+      - httpApi:
+          path: /placesPhotos
+          method: post
+  corsPlacePhotos:
+    handler: cors.handler
+    events:
+      - httpApi:
+          path: /placesPhotos
+          method: options
+
+  topFivePlaces:
+    handler: topFivePlaces.handler
+    events:
+      - httpApi:
+          path: /topFivePlaces
+          method: post
+  corsTopFivePlaces:
+    handler: cors.handler
+    events:
+      - httpApi:
+          path: /topFivePlaces
+          method: options
+
+  recommendedPlaceDescription:
+    handler: recommendedPlaceDescription.handler
+    events:
+      - httpApi:
+          path: /recommendedPlaceDescription
+          method: post
+  corsRecommendedPlace:
+    handler: cors.handler
+    events:
+      - httpApi:
+          path: /recommendedPlaceDescription
+          method: options
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
